@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ghost Net Reporting</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="container">
+  <h1>Ghost Net Reporting</h1>
+  
+  <!-- Form for reporting a ghost net anonymously -->
+  <form id="reportForm" class="form">
+    <h2>Report a Ghost Net</h2>
+    <label for="location">Location (GPS Coordinates):</label>
+    <input type="text" id="location" name="location" required>
+    <label for="size">Estimated Size:</label>
+    <input type="text" id="size" name="size" required>
+    <button type="submit">Report</button>
+  </form>
+  
+  <!-- Form for registering for net retrieval -->
+  <form id="retrieveForm" class="form">
+    <h2>Register for Net Retrieval</h2>
+    <label for="netId">Net ID:</label>
+    <input type="text" id="netId" name="netId" required>
+    <label for="name">Your Name:</label>
+    <input type="text" id="name" name="name" required>
+    <label for="phoneNumber">Phone Number:</label>
+    <input type="tel" id="phoneNumber" name="phoneNumber">
+    <button type="submit">Register</button>
+  </form>
+  
+  <!-- Display section for nets to be retrieved -->
+  <div id="retrieveList" class="list">
+    <h2>Nets to be Retrieved</h2>
+    <ul id="retrieveItems"></ul>
+  </div>
+  
+  <!-- Form for marking a net as retrieved -->
+  <form id="retrievedForm" class="form">
+    <h2>Mark Net as Retrieved</h2>
+    <label for="retrievedNetId">Net ID:</label>
+    <input type="text" id="retrievedNetId" name="retrievedNetId" required>
+    <button type="submit">Mark as Retrieved</button>
+  </form>
+  
+  <!-- Form for reporting a net as missing -->
+  <form id="missingForm" class="form">
+    <h2>Report Net as Missing</h2>
+    <label for="missingNetId">Net ID:</label>
+    <input type="text" id="missingNetId" name="missingNetId" required>
+    <button type="submit">Report as Missing</button>
+  </form>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
