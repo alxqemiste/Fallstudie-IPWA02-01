@@ -1,24 +1,39 @@
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 @Entity
 public class Ghostnet implements Serializable {
     
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String location;
     private int size;
-    private String status;
+    private String status = "reported";
     private String responsibleUser;
     private String phonenumber;
     
+    @Transient
+    private Ghostnet newNet = null;
+    
     public Ghostnet(){}
 
-    public Ghostnet(int id, String location, int size, String status) {
-        this.id = id;
+    public Ghostnet(String location, int size) {
         this.location = location;
         this.size = size;
+    }
+    
+    public Ghostnet(int id, String location, int size) {
+        this(location, size);
+        this.id = id;
+    }
+
+    public Ghostnet(int id, String location, int size, String status) {
+        this(id, location, size);
         this.status = status;
     }
     
@@ -27,10 +42,11 @@ public class Ghostnet implements Serializable {
         this.responsibleUser = responsibleUser;
     }
     
-     public Ghostnet(int id, String location, int size, String status, String responsibleUser, String phonenumber) {
+    public Ghostnet(int id, String location, int size, String status, String responsibleUser, String phonenumber) {
         this(id, location, size, status, responsibleUser);
         this.phonenumber = phonenumber;
     }
+     
 
     public int getId() {
         return id;
@@ -78,6 +94,18 @@ public class Ghostnet implements Serializable {
 
     public void setPhonenumber(String phonenumber) {
         this.phonenumber = phonenumber;
+    }
+
+    
+    public Ghostnet getNewNet() {
+        if(null == newNet) {
+            this.newNet = new Ghostnet();
+        }
+         return this.newNet;
+    }
+
+    public void setNewNet(Ghostnet newNet) {
+        this.newNet = newNet;
     }
     
     
