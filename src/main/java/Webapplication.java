@@ -16,8 +16,10 @@ public class Webapplication implements Serializable
     
     private final static EntityManagerFactory emf = Persistence.createEntityManagerFactory("webapplication");
     private static Webapplication instance = new Webapplication();
-    private List<Ghostnet> netlist = new ArrayList<Ghostnet>();
+    //private List<Ghostnet> netlist = new ArrayList<Ghostnet>();
+    //private List<Operator> userlist = new ArrayList<Operator>();
     
+   
 
   
     
@@ -33,8 +35,22 @@ public class Webapplication implements Serializable
             return null;
         }
     }
+    
+    public List<Operator> getUserlist() {
+        EntityManager em = emf.createEntityManager();
+        
+        try { 
+            Query q = em.createQuery("SELECT o from Operator o");
+            List<Operator> user = q.getResultList();
+            return user;
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
+    }
 
     public Webapplication(){
+        
     }
 
     public static Webapplication getInstance(){
@@ -48,6 +64,20 @@ public class Webapplication implements Serializable
         
         t.begin();
         em.persist(newNet);
+        t.commit();
+        
+        em.close();
+        
+        
+    }
+    
+    public void saveUserToDB(Operator user) {
+        EntityManager em = emf.createEntityManager();
+        
+        EntityTransaction t = em.getTransaction();
+        
+        t.begin();
+        em.persist(user);
         t.commit();
         
         em.close();
