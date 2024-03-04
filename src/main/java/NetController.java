@@ -9,6 +9,8 @@ public class NetController implements Serializable {
     private int id;
     private String location;
     private int size;
+    
+    private Ghostnet newNet = null;
 
     public String getLocation() {
         return location;
@@ -34,6 +36,10 @@ public class NetController implements Serializable {
         this.id = id;
     }
     
+    public void reportNet() {
+        newNet = new Ghostnet(id, location, size);
+        Webapplication.getInstance().saveNetToDB(newNet);
+    }
     
     
     
