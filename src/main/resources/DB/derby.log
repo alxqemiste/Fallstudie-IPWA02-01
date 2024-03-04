@@ -1,7 +1,7 @@
-Mon Mar 04 02:27:46 CET 2024 : Apache Derby Network Server 10.16.1.1 - (1901046) wurde gestartet und ist bereit, Verbindungen auf Port 1527 zu akzeptieren.
+Mon Mar 04 02:35:21 CET 2024 : Apache Derby Network Server 10.16.1.1 - (1901046) wurde gestartet und ist bereit, Verbindungen auf Port 1527 zu akzeptieren.
 ----------------------------------------------------------------
-Mon Mar 04 02:28:17 CET 2024:
-Booten von Derby-Version The Apache Software Foundation - Apache Derby - 10.16.1.1 - (1901046): Instanz a816c00e-018e-0712-f391-ffffd7537331
+Mon Mar 04 02:35:24 CET 2024:
+Booten von Derby-Version The Apache Software Foundation - Apache Derby - 10.16.1.1 - (1901046): Instanz a816c00e-018e-0719-e5e2-ffffd7537331
 für Datenbankverzeichnis C:\Users\alexa\OneDrive - IU International University of Applied Sciences\2. Semester\III. Programmierung von Webanwendungen\Fallstudien\Fallstudie II\Code\Fallstudie\src\main\resources\DB\Database mit Class Loader jdk.internal.loader.ClassLoaders$AppClassLoader@c387f44
 Geladen aus file:/C:/Program%20Files/Apache%20Derby/db-derby-10.16.1.1-bin/lib/derby.jar
 java.vendor=Oracle Corporation
