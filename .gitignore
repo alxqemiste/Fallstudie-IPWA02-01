@@ -1,1 +1,4 @@
-/src/main/resources/DB/
+/src/main/resources/DB/Database/
+/src/main/resources/DB/derby.log
+/src/main/resources/DB/derby.properties
+
