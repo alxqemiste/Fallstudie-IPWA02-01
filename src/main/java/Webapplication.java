@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
@@ -16,6 +17,8 @@ public class Webapplication implements Serializable
     private final static EntityManagerFactory emf = Persistence.createEntityManagerFactory("webapplication");
     private static Webapplication instance = new Webapplication();
     private List<Ghostnet> netlist = new ArrayList<Ghostnet>();
+    
+
   
     
     public List<Ghostnet> getNetlist() {
@@ -31,26 +34,25 @@ public class Webapplication implements Serializable
         }
     }
 
-    
-   
-
     public Webapplication(){
-        /*     
-        netlist.add(new Ghostnet(1,"word.word.word", 3, "gemeldet"));
-        netlist.add(new Ghostnet(2, "coord.coord.coord", 4, "wird geborgen", "admin"));*/
-
     }
 
-   
-    public static Webapplication getWebapplication(){
+    public static Webapplication getInstance(){
         return instance;
     }
 
-   public void soutPrintLn(){
-       System.out.println("methode");
-   }
-
-   
-    
+    public void saveNetToDB(Ghostnet newNet) {
+        EntityManager em = emf.createEntityManager();
+        
+        EntityTransaction t = em.getTransaction();
+        
+        t.begin();
+        em.persist(newNet);
+        t.commit();
+        
+        em.close();
+        
+        
+    }
    
 }
