@@ -50,30 +50,30 @@ public class RegisterController implements Serializable {
 
     public String register() {
         List<Operator> operatorList = Webapplication.getInstance().getOperatorList();
+        
+       boolean operatorExists = false;
 
-        if(operatorList.isEmpty()) {
+
+        if(operatorList.isEmpty()) { 
             operator = new Operator(operatorName, password, phonenumber);
             Webapplication.getInstance().saveOperatorToDB(operator);
         } else {
             for (Operator o : operatorList) {
 
                 if(o.getOperatorName().equals(operatorName)) {
-                    //TODO Errorhandling
-                    return "error.xhtml";
-                } else {
-                    operator = new Operator(operatorName, password, phonenumber);
-                    Webapplication.getInstance().saveOperatorToDB(operator);
-
-
+                    operatorExists = true;
+                    break;
                 }
             }
-            
+
+            if(!operatorExists) {
+                operator = new Operator(operatorName, password, phonenumber);
+                Webapplication.getInstance().saveOperatorToDB(operator);
+            }
         }
-        
-        
+           
         return "login.xhtml";
-         
-        
+    
     }
 
 }

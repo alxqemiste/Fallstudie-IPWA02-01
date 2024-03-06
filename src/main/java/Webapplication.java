@@ -27,7 +27,7 @@ public class Webapplication implements Serializable
         EntityManager em = emf.createEntityManager();
         
         try { 
-            Query q = em.createQuery("SELECT g from Ghostnet g");
+            Query q = em.createQuery("SELECT g from Ghostnet g WHERE g.status != 'Retrieved' ");
             List<Ghostnet> net = q.getResultList();
             return net;
         } catch (Exception e) {
@@ -89,7 +89,6 @@ public class Webapplication implements Serializable
     }
     
     public void saveOperatorToDB(Operator operator) {
-        System.out.println("SaveOperatorToDB");
         EntityManager em = emf.createEntityManager();
         
         EntityTransaction t = em.getTransaction();
