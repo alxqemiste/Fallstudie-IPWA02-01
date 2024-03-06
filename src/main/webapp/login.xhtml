@@ -12,10 +12,10 @@
         <h:form>
             <h:panelGrid columns="2">
                 <h:outputLabel for="username">Username:</h:outputLabel>
-                <h:inputText id="username" value="#{loginController.operator.username}" required="true"/>
+                <h:inputText id="username" value="#{loginController.operatorName}" required="true"/>
 
                 <h:outputLabel for="password">Password:</h:outputLabel>
-                <h:inputSecret id="password" value="#{loginController.operator.password}" required="true"/>
+                <h:inputSecret id="password" value="#{loginController.password}" required="true"/>
 
                 <h:commandButton value="Login" action="#{loginController.login()}" />
             </h:panelGrid>

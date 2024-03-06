@@ -3,6 +3,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
 @Entity
@@ -11,12 +12,15 @@ public class Ghostnet implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    
     private String location;
     private int size;
     private String status = "reported";
-    private String responsibleUser;
-    private String phonenumber;
     
+    @ManyToOne
+    private Operator responsibleOperator;
+    
+      
     @Transient
     private Ghostnet newNet = null;
     
@@ -37,16 +41,11 @@ public class Ghostnet implements Serializable {
         this.status = status;
     }
     
-    public Ghostnet(int id, String location, int size, String status, String responsibleUser) {
+    public Ghostnet(int id, String location, int size, String status, Operator responsibleOperator) {
         this(id, location, size, status);
-        this.responsibleUser = responsibleUser;
+        this.responsibleOperator = responsibleOperator;
     }
     
-    public Ghostnet(int id, String location, int size, String status, String responsibleUser, String phonenumber) {
-        this(id, location, size, status, responsibleUser);
-        this.phonenumber = phonenumber;
-    }
-     
 
     public int getId() {
         return id;
@@ -79,24 +78,7 @@ public class Ghostnet implements Serializable {
     public void setStatus(String status) {
         this.status = status;
     }
-
-    public String getResponsibleUser() {
-        return responsibleUser;
-    }
-
-    public void setResponsibleUser(String responsibleUser) {
-        this.responsibleUser = responsibleUser;
-    }
-
-    public String getPhonenumber() {
-        return phonenumber;
-    }
-
-    public void setPhonenumber(String phonenumber) {
-        this.phonenumber = phonenumber;
-    }
-
-    
+ 
     public Ghostnet getNewNet() {
         if(null == newNet) {
             this.newNet = new Ghostnet();
@@ -107,9 +89,16 @@ public class Ghostnet implements Serializable {
     public void setNewNet(Ghostnet newNet) {
         this.newNet = newNet;
     }
+
+    public Operator getResponsibleOperator() {
+        return responsibleOperator;
+    }
+
+    public void setResponsibleOperator(Operator responsibleOperator) {
+        this.responsibleOperator = responsibleOperator;
+    }
     
-    
-    
+  
     
     
     

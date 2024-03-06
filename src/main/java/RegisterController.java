@@ -1,23 +1,24 @@
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 import java.io.Serializable;
+import java.util.List;
 
 @Named
 @ViewScoped
 public class RegisterController implements Serializable {
 
-    private String username;
+    private String operatorName;
     private String password;
     private String phonenumber;
     
-    private Operator newUser = null;
+    private Operator operator = null;
 
-    public String getUsername() {
-        return username;
+    public String getOperatorName() {
+        return operatorName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setOperatorName(String operatorName) {
+        this.operatorName = operatorName;
     }
 
     public String getPassword() {
@@ -28,12 +29,12 @@ public class RegisterController implements Serializable {
         this.password = password;
     }
 
-    public Operator getNewUser() {
-        return newUser;
+    public Operator getOperator() {
+        return operator;
     }
 
-    public void setNewUser(Operator newUser) {
-        this.newUser = newUser;
+    public void setOperator(Operator operator) {
+        this.operator = operator;
     }
 
     public String getPhonenumber() {
@@ -48,13 +49,31 @@ public class RegisterController implements Serializable {
     
 
     public String register() {
-                
-        System.out.println(username +" " + password + " " + phonenumber );
-       
-        newUser = new Operator(username, password);
-        Webapplication.getInstance().saveUserToDB(newUser);
+        List<Operator> operatorList = Webapplication.getInstance().getOperatorList();
+
+        if(operatorList.isEmpty()) {
+            operator = new Operator(operatorName, password, phonenumber);
+            Webapplication.getInstance().saveOperatorToDB(operator);
+        } else {
+            for (Operator o : operatorList) {
+
+                if(o.getOperatorName().equals(operatorName)) {
+                    //TODO Errorhandling
+                    return "error.xhtml";
+                } else {
+                    operator = new Operator(operatorName, password, phonenumber);
+                    Webapplication.getInstance().saveOperatorToDB(operator);
+
+
+                }
+            }
+            
+        }
+        
         
         return "login.xhtml";
+         
+        
     }
 
 }

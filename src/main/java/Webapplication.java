@@ -17,7 +17,7 @@ public class Webapplication implements Serializable
     private final static EntityManagerFactory emf = Persistence.createEntityManagerFactory("webapplication");
     private static Webapplication instance = new Webapplication();
     //private List<Ghostnet> netlist = new ArrayList<Ghostnet>();
-    //private List<Operator> userlist = new ArrayList<Operator>();
+    //private List<Operator> operatorlist = new ArrayList<Operator>();
     
    
 
@@ -36,15 +36,32 @@ public class Webapplication implements Serializable
         }
     }
     
-    public List<Operator> getUserlist() {
+    public List<Ghostnet> getNet() {
+        EntityManager em = emf.createEntityManager();
+        
+        try { 
+          
+            Query q = em.createQuery("SELECT g from Ghostnet g where id=551");
+            List<Ghostnet> net = q.getResultList();
+            return net;
+        } catch (Exception e) {
+            System.out.println(e);
+            //TODO Errorhandling if necessary
+            return null;
+        }
+    }
+    
+    public List<Operator> getOperatorList() {
+
         EntityManager em = emf.createEntityManager();
         
         try { 
             Query q = em.createQuery("SELECT o from Operator o");
-            List<Operator> user = q.getResultList();
-            return user;
+            List<Operator> operator = q.getResultList();
+            return operator;
         } catch (Exception e) {
             System.out.println(e);
+            //TODO Errorhandling if necessary
             return null;
         }
     }
@@ -71,18 +88,21 @@ public class Webapplication implements Serializable
         
     }
     
-    public void saveUserToDB(Operator user) {
+    public void saveOperatorToDB(Operator operator) {
+        System.out.println("SaveOperatorToDB");
         EntityManager em = emf.createEntityManager();
         
         EntityTransaction t = em.getTransaction();
         
         t.begin();
-        em.persist(user);
+        em.persist(operator);
         t.commit();
         
         em.close();
         
         
     }
+    
+    
    
 }
