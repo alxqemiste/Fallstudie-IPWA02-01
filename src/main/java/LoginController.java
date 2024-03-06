@@ -6,20 +6,22 @@ import java.util.List;
 @Named
 @SessionScoped
 public class LoginController implements Serializable {
-    private String username;
+    
+    private String operatorName;
     private String password;
     
     private boolean anonymous;
     private boolean loggedIn = false;
-    
-    private Operator operator = new Operator(null, null, null);
 
-    public String getUsername() {
-        return username;
+    private static Operator operator = new Operator();
+    
+    
+    public String getOperatorName() {
+        return operatorName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setOperatorName(String operatorName) {
+        this.operatorName = operatorName;
     }
 
     public String getPassword() {
@@ -30,7 +32,7 @@ public class LoginController implements Serializable {
         this.password = password;
     }
 
-    public Operator getOperator() {
+    public static Operator getOperator() {
         return operator;
     }
 
@@ -53,11 +55,15 @@ public class LoginController implements Serializable {
     public void setLoggedIn(boolean loggedIn) {
         this.loggedIn = loggedIn;
     }
-    
-      
+
     public String login(){
-        List<Operator> userlist = Webapplication.getInstance().getUserlist();
-        for (Operator o : userlist) {
+        
+        operator.setOperatorName(operatorName);
+        operator.setPassword(password);
+        List<Operator> operatorList = Webapplication.getInstance().getOperatorList();
+        for (Operator o : operatorList) {
+            
+                       
             if(o.equals(this.operator)) {
                 if (o.getPhonenumber() == null) {
                     anonymous = true;
@@ -65,11 +71,19 @@ public class LoginController implements Serializable {
                     anonymous = false;
                 }
                 loggedIn = true;
+                operator.setOperatorId(o.getOperatorId());
+                operator.setPhonenumber(o.getPhonenumber());
+
                 return "index.xhtml";
             }
         }
         loggedIn = false;
         return "error.xhtml";
+    }
+    
+    //TODO maybe delete later
+    public void checkAttributes(){
+        System.out.println(operator.getOperatorId() + " " + operator.getOperatorName() +" "+ operator.getPassword() + " " + operator.getPhonenumber());
     }
     
     

@@ -12,8 +12,11 @@
     <p><img id="logo" src="src/logo.png" width="250"/></p>
   
     <h1>Überschrift</h1>
-
-  
+    
+    <!-- TODO delete later -->
+    <h:form><h:commandButton value="TestBTN" action="#{loginController.checkAttributes()}"/></h:form>
+    
+    
     <!-- Card to report the Net -->
     <div class="containerLeft">
         <h3> Report a Ghost Net </h3>
@@ -55,7 +58,7 @@
             </h:column>
             <h:column>
                 <f:facet name="header">Responsible User</f:facet>
-                <h:outputText value="#{net.responsibleUser}"/>
+                <h:outputText value="#{net.responsibleOperator.operatorName}"/>
             </h:column>
             
         
@@ -71,14 +74,10 @@
         <h:form>
             <h:panelGrid columns="2">
                 <h:outputLabel for="id" value="ID"/>
-                <h:inputText id="id"/>
-                <h:outputLabel for="name" value="Your Name"/>
-                <h:inputText id="name"/>
-                <h:outputLabel for="phonenumber" value="Your Phone Number"/>
-                <h:inputText id="phonenumber"/>
+                <h:inputText value="#{netController.netId}" id="id" required="true"/>
             </h:panelGrid>
          
-            <h:commandButton value="Retrieve" action="success"/>
+            <h:commandButton value="Register for Retrieval" action="#{netController.registerForRetrieval()}"/>
         </h:form>  
         
     </div>
@@ -106,8 +105,8 @@
             <h:panelGrid columns="2">
                 <h:outputLabel for="id" value="ID"/>
                 <h:inputText id="id"/>
-                <h:outputLabel for="username" value="Your Name"/>
-                <h:inputText id="username"/>
+                <h:outputLabel for="operatorname" value="Your Name"/>
+                <h:inputText id="operatorname"/>
                 <h:outputLabel for="phonenumber" value="Your Phonenumber"/>
                 <h:inputText id="phonenumber"/>
             </h:panelGrid>
