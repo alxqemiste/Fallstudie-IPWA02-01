@@ -1,3 +1,7 @@
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.component.UIComponent;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.validator.ValidatorException;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 import java.io.Serializable;
@@ -17,7 +21,7 @@ public class NetController implements Serializable {
     
     private int netId;
     private Ghostnet newNet;
-    
+ 
 
     public String getLocation() {
         return location;
@@ -42,20 +46,16 @@ public class NetController implements Serializable {
     public void setNetId(int netId) {
         this.netId = netId;
     }
+
     
+   
     
     
     public void reportNet() {
-        if(LoginController.getOperator().getOperatorId() != 0 && size > 0) {
-            newNet = new Ghostnet(netId, location, size, "reported");
-            Webapplication.getInstance().saveNetToDB(newNet);
-            location = "";
-            size=0;
-        } else {
-            System.out.println("Du bist anonym!");
-            //TODO Errohandling
-        }
-
+        newNet = new Ghostnet(netId, location, size, "reported");
+        Webapplication.getInstance().saveNetToDB(newNet);
+        location = "";
+        size=0;
     }
     
     public void registerForRetrieval() {
@@ -63,39 +63,34 @@ public class NetController implements Serializable {
         System.out.println(LoginController.getOperator().getOperatorId());
         
         EntityManager em= emf.createEntityManager();;
-        if (LoginController.getOperator().getOperatorId() != 0) {
-            
-            try {
-                newNet=em.find(Ghostnet.class, netId);
-                Operator operator = em.find(Operator.class, LoginController.getOperator().getOperatorId());
+   
+        try {
+            newNet=em.find(Ghostnet.class, netId);
+            Operator operator = em.find(Operator.class, LoginController.getOperator().getOperatorId());
 
-                System.out.println("RO: " + newNet.getResponsibleOperator());
+            System.out.println("RO: " + newNet.getResponsibleOperator());
 
-                if(newNet.getResponsibleOperator() == null) {
-                    newNet.setResponsibleOperator(operator);
-                    newNet.setStatus("Retrieval Pending");
+            if(newNet.getResponsibleOperator() == null) {
+                newNet.setResponsibleOperator(operator);
+                newNet.setStatus("Retrieval Pending");
 
-                    EntityTransaction t = em.getTransaction();
-                    t.begin();
-                    em.persist(newNet);
-                    t.commit();
-                    em.close();
-                } else {
-                    System.out.println("Um dieses Netz kümmert sich schon jemand!");
-                    //TODO Errorhandling
-                
-                }
-            }
-            catch (Exception e){
-                System.out.println(e);
+                EntityTransaction t = em.getTransaction();
+                t.begin();
+                em.persist(newNet);
+                t.commit();
+                em.close();
+            } else {
+                System.out.println("Um dieses Netz kümmert sich schon jemand!");
                 //TODO Errorhandling
             }
-            
-        } else {
-            System.out.println("Du bist anonym!");
-            //TODO Errorhandling
         }
-        
+        catch (Exception e){
+            System.out.println(e);
+            //TODO Errorhandling
+            System.out.println("Netz nicht gefunden");
+
+        }
+
         netId = 0;
         
     }
@@ -103,38 +98,34 @@ public class NetController implements Serializable {
     public void markNetAsRetrieved () {
         
         EntityManager em= emf.createEntityManager();;
-        if (LoginController.getOperator().getOperatorId() != 0) {
-            
-            try {
-                newNet=em.find(Ghostnet.class, netId);
-                Operator operator = em.find(Operator.class, LoginController.getOperator().getOperatorId());
 
-                if(!"Retrieval Pending".equals(newNet.getStatus())) {
+        try {
+            newNet=em.find(Ghostnet.class, netId);
+            Operator operator = em.find(Operator.class, LoginController.getOperator().getOperatorId());
 
-                    System.out.println("Dieses Netz wurde noch nicht für eine aktive Bergung gemeldet");
-                    //TODO Errorhandling
-                    
-                } else {
-                    newNet.setStatus("Retrieved");
-                    newNet.setResponsibleOperator(operator);
-                    EntityTransaction t = em.getTransaction();
-                    t.begin();
-                    em.persist(newNet);
-                    t.commit();
-                    em.close();
-                
-                }
-            }
-            catch (Exception e){
-                System.out.println("Dieses Netz exisitert nicht!");
-                System.out.println(e);
+            if(!"Retrieval Pending".equals(newNet.getStatus())) {
+
+                System.out.println("Dieses Netz wurde noch nicht für eine aktive Bergung gemeldet");
                 //TODO Errorhandling
+
+            } else {
+                newNet.setStatus("Retrieved");
+                newNet.setResponsibleOperator(operator);
+                EntityTransaction t = em.getTransaction();
+                t.begin();
+                em.persist(newNet);
+                t.commit();
+                em.close();
+
             }
-            
-        } else {
-            System.out.println("Du bist anonym!");
+        }
+        catch (Exception e){
+            System.out.println("Dieses Netz exisitert nicht!");
+            System.out.println(e);
             //TODO Errorhandling
         }
+            
+
         
         netId = 0;
 

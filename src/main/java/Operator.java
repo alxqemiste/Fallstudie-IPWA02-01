@@ -17,7 +17,7 @@ public class Operator {
     @Column(nullable = false)
     private String password;
     private String phonenumber;
-      
+
     public Operator(){};
 
     public Operator(String operatorName, String password) {
@@ -36,8 +36,6 @@ public class Operator {
         this.operatorId = operatorId;
 
     }
-
-    
 
     public int getOperatorId() {
         return operatorId;
@@ -71,7 +69,7 @@ public class Operator {
         this.phonenumber = phonenumber;
     }
 
-     
+    
     @Override
     public boolean equals(Object obj) {
         if(obj instanceof Operator) {

@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
 <h:head>
     <title>Login</title>
@@ -11,17 +12,19 @@
     <div class="container">
         <h:form>
             <h:panelGrid columns="2">
-                <h:outputLabel for="username">Username:</h:outputLabel>
-                <h:inputText id="username" value="#{loginController.operatorName}" required="true"/>
+                <p:outputLabel for="username" value="Username"/>
+                <p:inputText id="username" value="#{loginController.operatorName}" required="true"/>
+                <p:outputLabel for="password" value="Password"/>
+                <p:password id="password" value="#{loginController.password}" required="true"/>
 
-                <h:outputLabel for="password">Password:</h:outputLabel>
-                <h:inputSecret id="password" value="#{loginController.password}" required="true"/>
-
-                <h:commandButton value="Login" action="#{loginController.login()}" />
+                <p:commandButton value="Login" action="#{loginController.login()}" />
+               
             </h:panelGrid>
         </h:form>
 
-        <h:form><h:commandLink value="Register" action="register.xhtml"/></h:form>
+        <h:form>
+        <p:commandButton value="Register" action="register.xhtml"/>
+        <p:commandButton value="Incognito-Mode" action="index.xhtml" /></h:form>
     </div>
 </h:body>
 </html>

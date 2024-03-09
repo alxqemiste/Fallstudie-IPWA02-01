@@ -19,10 +19,11 @@ public class Webapplication implements Serializable
     //private List<Ghostnet> netlist = new ArrayList<Ghostnet>();
     //private List<Operator> operatorlist = new ArrayList<Operator>();
     
-   
-
-  
     
+    public Webapplication(){
+        
+    }
+
     public List<Ghostnet> getNetlist() {
         EntityManager em = emf.createEntityManager();
         
@@ -64,10 +65,6 @@ public class Webapplication implements Serializable
             //TODO Errorhandling if necessary
             return null;
         }
-    }
-
-    public Webapplication(){
-        
     }
 
     public static Webapplication getInstance(){

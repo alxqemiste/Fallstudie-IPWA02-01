@@ -9,98 +9,110 @@
 </h:head>
       
 <h:body>
+
     <div id="header" class="container">
         <img id="logo" src="src/logo.png" width="250"/>
         <h1 id="title">Ghostnet Surveillance</h1>
         <h:form styleClass="headerRight">
-            <p:commandButton value="Logout" action="#{loginController.logout()}"/>
-            
-            <!-- TODO delete later -->
-            <p:commandButton value="TestBTN" action="#{loginController.checkAttributes()}"/>
+            <p:commandButton value="LogIn" action="login.xhtml" rendered="#{loginController.loggedIn == false}"/>
+            <p:commandButton value="Logout" action="#{loginController.logout()}" rendered="#{loginController.loggedIn == true}"/>
+
         </h:form>
     </div>
-  
+
     <div class="container">
         <p:tabView>
             <p:tab title="Report a Ghostnet">
                 <h:form>
-                    <h:panelGrid columns="2">
+                    <h:panelGrid columns="3">
                         <p:outputLabel for="location" value="Location(WhatThreeWords)"/>
-                        <p:inputText id="location" required="true" value="#{netController.location}"/>
+                        <p:inputText id="location" required="true" value="#{netController.location}" validatorMessage="Please use a valid 3-word-coordinate. Thank you!">
+                            <f:validateRegex pattern="^[a-zA-ZäöüÄÖÜß]+\.[a-zA-ZäöüÄÖÜß]+\.[a-zA-ZäöüÄÖÜß]+$"/>
+                        </p:inputText>
+                        <p:message for="location" />
                         <p:outputLabel for="size" value="Estimated Size (qm)"/>
-                        <p:inputText type="number" id="size" required="true" value="#{netController.size}"/>
+                        <p:inputText type="number" id="size" required="true" value="#{netController.size}" validatorMessage="Please enter a size. Thank you!">
+                            <f:validateLongRange minimum="1"/>
+                        </p:inputText>
+                        <p:message for="size" />
                     </h:panelGrid>
 
-                    <h:commandButton value="Report Net" action="#{netController.reportNet()}"/>
+                    <p:commandButton value="Report Net" action="#{netController.reportNet()}" update="dataTable location size"/>
                 </h:form>  
             </p:tab>
-            <p:tab title="Sign up for retrieval">
+            <p:tab title="Sign up for retrieval" rendered="#{loginController.loggedIn == true}">
                 <h:form>
-                    <h:panelGrid columns="2">
+                    <h:panelGrid columns="3">
                         <p:outputLabel for="id" value="ID"/>
-                        <p:inputText type="number" value="#{netController.netId}" id="id" required="true"/>
+                        <p:inputText  type="number" value="#{netController.netId}" id="id" required="true" validatorMessage="Please enter an ID. Thank you!">
+                            <f:validateLongRange minimum="1"/>
+                        </p:inputText>
+                        <p:message for="id" />
                     </h:panelGrid>
 
-                    <h:commandButton value="Register for Retrieval" action="#{netController.registerForRetrieval()}"/>
+                    <p:commandButton id="submitBtn" value="Register for Retrieval" action="#{netController.registerForRetrieval()}" update="dataTable id"/>
+
                 </h:form>  
             </p:tab>
-            <p:tab title="Mark net as retrieved">
+            <p:tab title="Mark net as retrieved" rendered="#{loginController.loggedIn == true}">
                 <h:form>
-                    <h:panelGrid columns="2">
+                    <h:panelGrid columns="3">
                         <p:outputLabel for="id" value="ID" />
-                        <p:inputText type="number" value="#{netController.netId}" id="id" required="true"/>
+                        <p:inputText type="number" value="#{netController.netId}" id="id" required="true" validatorMessage="Please enter an ID. Thank you!">
+                            <f:validateLongRange minimum="1"/>
+                        </p:inputText>
+                         <p:message for="id" />
                     </h:panelGrid>
 
-                    <h:commandButton value="Mark as retrieved" action="#{netController.markNetAsRetrieved()}"/>
+                    <p:commandButton value="Mark as retrieved" action="#{netController.markNetAsRetrieved()}" update="dataTable id"/>
                 </h:form>  
             </p:tab>
-            <p:tab title="Mark net as missing">
+            <p:tab title="Mark net as missing" rendered="#{loginController.loggedIn == true}">
                 <h:form>
                     <h:panelGrid columns="2">
                         <p:outputLabel for="id" value="ID"/>
-                        <p:inputText type="number" value="#{netController.netId}" id="id" required="true"/>
+                        <p:inputText type="number" value="#{netController.netId}" id="id" required="true" validatorMessage="Please enter an ID. Thank you!">
+                            <f:validateLongRange minimum="1"/>
+                        </p:inputText>
+                        <p:message for="id" />
                     </h:panelGrid>
 
-                    <h:commandButton value="Mark as missing" action="#{netController.markNetAsMissing()}"/>
+                    <p:commandButton value="Mark as missing" action="#{netController.markNetAsMissing()}" update="dataTable id"/>
                 </h:form>  
             </p:tab>
     </p:tabView>
     </div>
-       
-    <!-- List of Ghostnets -->
-    <div class="container">
-        
-        <h3> Nets to be retrieved </h3>
-        
-        <p:dataTable var="net" value="#{webapplication.netlist}">
-            <p:column>
-                <f:facet name="header">ID</f:facet>
-                #{net.id}
-            </p:column>
-            <p:column>
-                <f:facet name="header">Location</f:facet>
-                #{net.location}
-            </p:column>
-            <p:column>
-                <f:facet name="header">Size</f:facet>
-                #{net.size}
-            </p:column>
-            <p:column>
-                <f:facet name="header">Status</f:facet>
-                #{net.status}
-            </p:column>
-            <p:column>
-                <f:facet name="header">Responsible User</f:facet>
-                #{net.responsibleOperator.operatorName}
-            </p:column>
-            
-        
-        </p:dataTable>
 
-        
-    </div>
-    
-   
+
+    <!-- List of Ghostnets -->
+    <p:dataTable id="dataTable" var="net" value="#{webapplication.netlist}" rendered="#{loginController.loggedIn == true}" styleClass="container">
+
+        <f:facet name="header">
+            Nets to be retrieved
+        </f:facet>
+        <p:column>
+            <f:facet name="header">ID</f:facet>
+            #{net.id}
+        </p:column>
+        <p:column>
+            <f:facet name="header">Location</f:facet>
+            #{net.location}
+        </p:column>
+        <p:column>
+            <f:facet name="header">Size</f:facet>
+            #{net.size}
+        </p:column>
+        <p:column>
+            <f:facet name="header">Status</f:facet>
+            #{net.status}
+        </p:column>
+        <p:column>
+            <f:facet name="header">Responsible User</f:facet>
+            #{net.responsibleOperator.operatorName}
+        </p:column>
+
+
+    </p:dataTable>
 
 </h:body>
 </html>

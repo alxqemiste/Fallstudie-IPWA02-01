@@ -1,9 +1,15 @@
+import jakarta.annotation.ManagedBean;
 import jakarta.enterprise.context.SessionScoped;
+import jakarta.faces.context.ExternalContext;
+import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
+import jakarta.servlet.http.HttpSession;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
 @Named
+@ManagedBean
 @SessionScoped
 public class LoginController implements Serializable {
     
@@ -11,10 +17,9 @@ public class LoginController implements Serializable {
     private String password;
     
     private boolean loggedIn = false;
+    
+    private static Operator operator = new Operator(0, null, null, null);
 
-    private static Operator operator = new Operator();
-    
-    
     public String getOperatorName() {
         return operatorName;
     }
@@ -44,10 +49,11 @@ public class LoginController implements Serializable {
     }
 
     public void setLoggedIn(boolean loggedIn) {
-        this.loggedIn = loggedIn;
+        this.loggedIn=loggedIn;
     }
 
     public String login(){
+        System.out.println("login()");
         
         operator.setOperatorName(operatorName);
         operator.setPassword(password);
@@ -59,7 +65,6 @@ public class LoginController implements Serializable {
                 loggedIn = true;
                 operator.setOperatorId(o.getOperatorId());
                 operator.setPhonenumber(o.getPhonenumber());
-
                 return "index.xhtml";
             }
         }
@@ -69,15 +74,14 @@ public class LoginController implements Serializable {
     }
     
     public String logout() {
+        System.out.println("logout()");
         operator = new Operator(0, null, null, null);
+        this.operatorName = null;
+        this.password = null;
         loggedIn = false;
-        return "login.xhtml";
+        return "index?faces-redirect=true";
     }
     
-    //TODO maybe delete later
-    public void checkAttributes(){
-        System.out.println(operator.getOperatorId() + " " + operator.getOperatorName() +" "+ operator.getPassword() + " " + operator.getPhonenumber());
-    }
-    
+       
     
 }
