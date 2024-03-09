@@ -1,8 +1,37 @@
-.containerLeft {
-  max-width: 50%;
-  margin: 20px 0 0 0;
+.container {
+  max-width: 90%;
+  margin: 20px auto 0 auto;
   padding: 5px 20px 5px 20px;
   background-color: #fff;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
+#header {
+    display:grid;
+    grid-template-columns: [c1] auto [c2] auto [c3] auto [end];
+}
+
+#logo {
+    grid-column-start: c1;
+    grid-column-end: c2;
+}
+
+#title {
+    grid-column-start: c2;
+    grid-column-end: c3;
+    
+    justify-self: center;
+
+}
+.headerRight {
+    grid-column-start: c3;
+    grid-column-end: c4;
+
+    
+    justify-self: right;
+}
+
+
+
+

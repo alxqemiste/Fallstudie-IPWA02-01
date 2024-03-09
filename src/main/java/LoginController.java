@@ -10,7 +10,6 @@ public class LoginController implements Serializable {
     private String operatorName;
     private String password;
     
-    private boolean anonymous;
     private boolean loggedIn = false;
 
     private static Operator operator = new Operator();
@@ -40,14 +39,6 @@ public class LoginController implements Serializable {
         this.operator = operator;
     }
 
-    public boolean isAnonymous() {
-        return anonymous;
-    }
-
-    public void setAnonymous(boolean anonymous) {
-        this.anonymous = anonymous;
-    }
-
     public boolean isLoggedIn() {
         return loggedIn;
     }
@@ -65,11 +56,6 @@ public class LoginController implements Serializable {
             
                        
             if(o.equals(this.operator)) {
-                if (o.getPhonenumber() == null) {
-                    anonymous = true;
-                } else {
-                    anonymous = false;
-                }
                 loggedIn = true;
                 operator.setOperatorId(o.getOperatorId());
                 operator.setPhonenumber(o.getPhonenumber());
@@ -78,7 +64,14 @@ public class LoginController implements Serializable {
             }
         }
         loggedIn = false;
+        //TODO Errorhandling
         return "error.xhtml";
+    }
+    
+    public String logout() {
+        operator = new Operator(0, null, null, null);
+        loggedIn = false;
+        return "login.xhtml";
     }
     
     //TODO maybe delete later

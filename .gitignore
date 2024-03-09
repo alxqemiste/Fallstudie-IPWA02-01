@@ -1,4 +1,7 @@
 /src/main/resources/DB/Database/
+/src/main/resources/DB/Database/log
+/src/main/resources/DB/Database/seg()
+/src/main/resources/DB/Database/tmp
 /src/main/resources/DB/derby.log
 /src/main/resources/DB/derby.properties
 

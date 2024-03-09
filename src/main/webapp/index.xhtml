@@ -2,119 +2,106 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      >
+      xmlns:p="http://primefaces.org/ui" >
 <h:head>
     <link rel="stylesheet" type="text/css" media="screen" href="style.css"/>
-    <title>Header Titel</title>
+    <title>Ghostnet Surveillance</title>
 </h:head>
       
 <h:body>
-    <p><img id="logo" src="src/logo.png" width="250"/></p>
-  
-    <h1>Überschrift</h1>
-    
-    <!-- TODO delete later -->
-    <h:form><h:commandButton value="TestBTN" action="#{loginController.checkAttributes()}"/></h:form>
-    
-    
-    <!-- Card to report the Net -->
-    <div class="containerLeft">
-        <h3> Report a Ghost Net </h3>
-        
-        <h:form>
-            <h:panelGrid columns="2">
-                <h:outputLabel for="location" value="Location(WhatThreeWords)"/>
-                <h:inputText id="location" required="true" value="#{netController.location}"/>
-                <h:outputLabel for="size" value="Estimated Size (qm)"/>
-                <h:inputText id="size" required="true" value="#{netController.size}"/>
-            </h:panelGrid>
-         
-            <h:commandButton value="Report Net" action="#{netController.reportNet()}"/>
-        </h:form>  
-        
+    <div id="header" class="container">
+        <img id="logo" src="src/logo.png" width="250"/>
+        <h1 id="title">Ghostnet Surveillance</h1>
+        <h:form styleClass="headerRight">
+            <p:commandButton value="Logout" action="#{loginController.logout()}"/>
+            
+            <!-- TODO delete later -->
+            <p:commandButton value="TestBTN" action="#{loginController.checkAttributes()}"/>
+        </h:form>
     </div>
-    
+  
+    <div class="container">
+        <p:tabView>
+            <p:tab title="Report a Ghostnet">
+                <h:form>
+                    <h:panelGrid columns="2">
+                        <p:outputLabel for="location" value="Location(WhatThreeWords)"/>
+                        <p:inputText id="location" required="true" value="#{netController.location}"/>
+                        <p:outputLabel for="size" value="Estimated Size (qm)"/>
+                        <p:inputText type="number" id="size" required="true" value="#{netController.size}"/>
+                    </h:panelGrid>
+
+                    <h:commandButton value="Report Net" action="#{netController.reportNet()}"/>
+                </h:form>  
+            </p:tab>
+            <p:tab title="Sign up for retrieval">
+                <h:form>
+                    <h:panelGrid columns="2">
+                        <p:outputLabel for="id" value="ID"/>
+                        <p:inputText type="number" value="#{netController.netId}" id="id" required="true"/>
+                    </h:panelGrid>
+
+                    <h:commandButton value="Register for Retrieval" action="#{netController.registerForRetrieval()}"/>
+                </h:form>  
+            </p:tab>
+            <p:tab title="Mark net as retrieved">
+                <h:form>
+                    <h:panelGrid columns="2">
+                        <p:outputLabel for="id" value="ID" />
+                        <p:inputText type="number" value="#{netController.netId}" id="id" required="true"/>
+                    </h:panelGrid>
+
+                    <h:commandButton value="Mark as retrieved" action="#{netController.markNetAsRetrieved()}"/>
+                </h:form>  
+            </p:tab>
+            <p:tab title="Mark net as missing">
+                <h:form>
+                    <h:panelGrid columns="2">
+                        <p:outputLabel for="id" value="ID"/>
+                        <p:inputText type="number" value="#{netController.netId}" id="id" required="true"/>
+                    </h:panelGrid>
+
+                    <h:commandButton value="Mark as missing" action="#{netController.markNetAsMissing()}"/>
+                </h:form>  
+            </p:tab>
+    </p:tabView>
+    </div>
+       
     <!-- List of Ghostnets -->
-    <div class="containerLeft">
+    <div class="container">
         
         <h3> Nets to be retrieved </h3>
         
-        <h:dataTable var="net" value="#{webapplication.netlist}">
-            <h:column>
+        <p:dataTable var="net" value="#{webapplication.netlist}">
+            <p:column>
                 <f:facet name="header">ID</f:facet>
-                <h:outputText value="#{net.id}"/>
-            </h:column>
-            <h:column>
+                #{net.id}
+            </p:column>
+            <p:column>
                 <f:facet name="header">Location</f:facet>
-                <h:outputText value="#{net.location}"/>
-            </h:column>
-            <h:column>
+                #{net.location}
+            </p:column>
+            <p:column>
                 <f:facet name="header">Size</f:facet>
-                <h:outputText value="#{net.size}"/>
-            </h:column>
-            <h:column>
+                #{net.size}
+            </p:column>
+            <p:column>
                 <f:facet name="header">Status</f:facet>
-                <h:outputText value="#{net.status}"/>
-            </h:column>
-            <h:column>
+                #{net.status}
+            </p:column>
+            <p:column>
                 <f:facet name="header">Responsible User</f:facet>
-                <h:outputText value="#{net.responsibleOperator.operatorName}"/>
-            </h:column>
+                #{net.responsibleOperator.operatorName}
+            </p:column>
             
         
-        </h:dataTable>
+        </p:dataTable>
 
         
     </div>
     
-    <!-- Card to register for retrieving -->
-    <div class="containerLeft">
-        <h3> Retrieve a net </h3>
-        
-        <h:form>
-            <h:panelGrid columns="2">
-                <h:outputLabel for="id" value="ID"/>
-                <h:inputText value="#{netController.netId}" id="id" required="true"/>
-            </h:panelGrid>
-         
-            <h:commandButton value="Register for Retrieval" action="#{netController.registerForRetrieval()}"/>
-        </h:form>  
-        
-    </div>
-    
-    <!-- Card to mark the net as retrieved -->
-    <div class="containerLeft">
-        <h3> Mark net as retrieved </h3>
-        
-        <h:form>
-            <h:panelGrid columns="2">
-                <h:outputLabel for="id" value="ID" />
-                <h:inputText id="id" required="true"/>
-            </h:panelGrid>
-         
-            <h:commandButton value="Mark as retrieved" action="error.xhtml"/>
-        </h:form>  
-        
-    </div>
-    
-    <!-- Card to mark the net as missing -->
-    <div class="containerLeft">
-        <h3> Mark net as missing </h3>
-        
-        <h:form>
-            <h:panelGrid columns="2">
-                <h:outputLabel for="id" value="ID"/>
-                <h:inputText id="id"/>
-                <h:outputLabel for="operatorname" value="Your Name"/>
-                <h:inputText id="operatorname"/>
-                <h:outputLabel for="phonenumber" value="Your Phonenumber"/>
-                <h:inputText id="phonenumber"/>
-            </h:panelGrid>
-         
-            <h:commandButton value="Mark as missing" action="success"/>
-        </h:form>  
-        
-    </div>
+   
+
 </h:body>
 </html>
 

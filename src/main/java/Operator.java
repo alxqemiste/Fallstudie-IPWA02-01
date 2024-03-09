@@ -1,4 +1,3 @@
-import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,10 +12,10 @@ public class Operator {
     private int operatorId;
     
     @Column(nullable = false)
-    private String operatorName = "admin";
+    private String operatorName;
     
     @Column(nullable = false)
-    private String password = "admin";
+    private String password;
     private String phonenumber;
       
     public Operator(){};
@@ -30,6 +29,11 @@ public class Operator {
     public Operator(String operatorName, String password, String phonenumber) {
         this(operatorName, password);
         this.phonenumber = phonenumber;
+
+    }
+    public Operator(int operatorId, String operatorName, String password, String phonenumber) {
+        this(operatorName, password, phonenumber);
+        this.operatorId = operatorId;
 
     }
 

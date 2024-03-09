@@ -15,14 +15,11 @@ public class Ghostnet implements Serializable {
     
     private String location;
     private int size;
-    private String status = "reported";
+    private String status;
     
     @ManyToOne
     private Operator responsibleOperator;
     
-      
-    @Transient
-    private Ghostnet newNet = null;
     
     public Ghostnet(){}
 
@@ -79,17 +76,6 @@ public class Ghostnet implements Serializable {
         this.status = status;
     }
  
-    public Ghostnet getNewNet() {
-        if(null == newNet) {
-            this.newNet = new Ghostnet();
-        }
-         return this.newNet;
-    }
-
-    public void setNewNet(Ghostnet newNet) {
-        this.newNet = newNet;
-    }
-
     public Operator getResponsibleOperator() {
         return responsibleOperator;
     }
