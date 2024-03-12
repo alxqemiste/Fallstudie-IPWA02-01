@@ -11,10 +11,7 @@ public class Operator {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int operatorId;
     
-    @Column(nullable = false)
     private String operatorName;
-    
-    @Column(nullable = false)
     private String password;
     private String phonenumber;
 
@@ -31,12 +28,14 @@ public class Operator {
         this.phonenumber = phonenumber;
 
     }
+    
     public Operator(int operatorId, String operatorName, String password, String phonenumber) {
         this(operatorName, password, phonenumber);
         this.operatorId = operatorId;
 
     }
 
+    
     public int getOperatorId() {
         return operatorId;
     }
@@ -81,6 +80,5 @@ public class Operator {
         
         return false;
     }
-    
     
 }

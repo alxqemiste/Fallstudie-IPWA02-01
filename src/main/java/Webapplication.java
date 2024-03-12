@@ -1,7 +1,6 @@
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Named;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -16,10 +15,7 @@ public class Webapplication implements Serializable
     
     private final static EntityManagerFactory emf = Persistence.createEntityManagerFactory("webapplication");
     private static Webapplication instance = new Webapplication();
-    //private List<Ghostnet> netlist = new ArrayList<Ghostnet>();
-    //private List<Operator> operatorlist = new ArrayList<Operator>();
-    
-    
+       
     public Webapplication(){
         
     }
@@ -33,21 +29,6 @@ public class Webapplication implements Serializable
             return net;
         } catch (Exception e) {
             System.out.println(e);
-            return null;
-        }
-    }
-    
-    public List<Ghostnet> getNet() {
-        EntityManager em = emf.createEntityManager();
-        
-        try { 
-          
-            Query q = em.createQuery("SELECT g from Ghostnet g where id=551");
-            List<Ghostnet> net = q.getResultList();
-            return net;
-        } catch (Exception e) {
-            System.out.println(e);
-            //TODO Errorhandling if necessary
             return null;
         }
     }
@@ -71,20 +52,6 @@ public class Webapplication implements Serializable
         return instance;
     }
 
-    public void saveNetToDB(Ghostnet newNet) {
-        EntityManager em = emf.createEntityManager();
-        
-        EntityTransaction t = em.getTransaction();
-        
-        t.begin();
-        em.persist(newNet);
-        t.commit();
-        
-        em.close();
-        
-        
-    }
-    
     public void saveOperatorToDB(Operator operator) {
         EntityManager em = emf.createEntityManager();
         
@@ -98,7 +65,5 @@ public class Webapplication implements Serializable
         
         
     }
-    
-    
-   
+
 }

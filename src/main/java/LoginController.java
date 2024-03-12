@@ -1,10 +1,6 @@
 import jakarta.annotation.ManagedBean;
 import jakarta.enterprise.context.SessionScoped;
-import jakarta.faces.context.ExternalContext;
-import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
-import jakarta.servlet.http.HttpSession;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
@@ -15,7 +11,6 @@ public class LoginController implements Serializable {
     
     private String operatorName;
     private String password;
-    
     private boolean loggedIn = false;
     
     private static Operator operator = new Operator(0, null, null, null);
@@ -52,11 +47,12 @@ public class LoginController implements Serializable {
         this.loggedIn=loggedIn;
     }
 
+    
     public String login(){
-        System.out.println("login()");
-        
+                
         operator.setOperatorName(operatorName);
         operator.setPassword(password);
+         
         List<Operator> operatorList = Webapplication.getInstance().getOperatorList();
         for (Operator o : operatorList) {
             
@@ -74,14 +70,12 @@ public class LoginController implements Serializable {
     }
     
     public String logout() {
-        System.out.println("logout()");
+
         operator = new Operator(0, null, null, null);
         this.operatorName = null;
         this.password = null;
         loggedIn = false;
         return "index?faces-redirect=true";
     }
-    
-       
     
 }

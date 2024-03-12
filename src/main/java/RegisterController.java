@@ -10,9 +10,9 @@ public class RegisterController implements Serializable {
     private String operatorName;
     private String password;
     private String phonenumber;
-    
     private Operator operator = null;
 
+    
     public String getOperatorName() {
         return operatorName;
     }
@@ -46,8 +46,6 @@ public class RegisterController implements Serializable {
     }
 
    
-    
-
     public String register() {
         List<Operator> operatorList = Webapplication.getInstance().getOperatorList();
         
