@@ -1,11 +1,15 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui" >
 <h:head>
   <title>Header Titel</title>
 </h:head>
 <h:body>
-  <h:outputText value="Error"></h:outputText>
+  <h:outputText value="We are sorry, but somehow an error occured!"></h:outputText>
+  <h:form>
+      <p:commandButton value="LogIn" action="index.xhtml" />
+  </h:form>
 </h:body>
 </html>
 

@@ -1,20 +1,20 @@
+import jakarta.annotation.ManagedBean;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Named;
 import java.io.Serializable;
 import java.util.List;
 
 @Named
+@ManagedBean
 @SessionScoped
 public class LoginController implements Serializable {
     
     private String operatorName;
     private String password;
-    
     private boolean loggedIn = false;
+    
+    private static Operator operator = new Operator(0, null, null, null);
 
-    private static Operator operator = new Operator();
-    
-    
     public String getOperatorName() {
         return operatorName;
     }
@@ -44,13 +44,15 @@ public class LoginController implements Serializable {
     }
 
     public void setLoggedIn(boolean loggedIn) {
-        this.loggedIn = loggedIn;
+        this.loggedIn=loggedIn;
     }
 
+    
     public String login(){
-        
+                
         operator.setOperatorName(operatorName);
         operator.setPassword(password);
+         
         List<Operator> operatorList = Webapplication.getInstance().getOperatorList();
         for (Operator o : operatorList) {
             
@@ -59,7 +61,6 @@ public class LoginController implements Serializable {
                 loggedIn = true;
                 operator.setOperatorId(o.getOperatorId());
                 operator.setPhonenumber(o.getPhonenumber());
-
                 return "index.xhtml";
             }
         }
@@ -69,15 +70,12 @@ public class LoginController implements Serializable {
     }
     
     public String logout() {
+
         operator = new Operator(0, null, null, null);
+        this.operatorName = null;
+        this.password = null;
         loggedIn = false;
-        return "login.xhtml";
+        return "index?faces-redirect=true";
     }
-    
-    //TODO maybe delete later
-    public void checkAttributes(){
-        System.out.println(operator.getOperatorId() + " " + operator.getOperatorName() +" "+ operator.getPassword() + " " + operator.getPhonenumber());
-    }
-    
     
 }

@@ -11,13 +11,10 @@ public class Operator {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int operatorId;
     
-    @Column(nullable = false)
     private String operatorName;
-    
-    @Column(nullable = false)
     private String password;
     private String phonenumber;
-      
+
     public Operator(){};
 
     public Operator(String operatorName, String password) {
@@ -31,6 +28,7 @@ public class Operator {
         this.phonenumber = phonenumber;
 
     }
+    
     public Operator(int operatorId, String operatorName, String password, String phonenumber) {
         this(operatorName, password, phonenumber);
         this.operatorId = operatorId;
@@ -38,7 +36,6 @@ public class Operator {
     }
 
     
-
     public int getOperatorId() {
         return operatorId;
     }
@@ -71,7 +68,7 @@ public class Operator {
         this.phonenumber = phonenumber;
     }
 
-     
+    
     @Override
     public boolean equals(Object obj) {
         if(obj instanceof Operator) {
@@ -83,6 +80,5 @@ public class Operator {
         
         return false;
     }
-    
     
 }
