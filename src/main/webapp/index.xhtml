@@ -11,15 +11,15 @@
 <h:body>
 
     <div id="header" class="container">
-        <img id="logo" src="src/logo.png" width="250"/>
+        <img id="logo" src="src/logo_new.png" width="250"/>
         <h1 id="title">Ghostnet Surveillance</h1>
         <h:form styleClass="headerRight">
             <p:commandButton value="LogIn" action="login.xhtml" rendered="#{loginController.loggedIn == false}"/>
             <p:commandButton value="Logout" action="#{loginController.logout()}" rendered="#{loginController.loggedIn == true}"/>
-
         </h:form>
     </div>
 
+    <!-- TabView with fudamental functions -->
     <div class="container">
         <p:tabView>
             <p:tab title="Report a Ghostnet">
@@ -85,7 +85,7 @@
 
 
     <!-- List of Ghostnets -->
-    <p:dataTable id="dataTable" var="net" value="#{webapplication.netlist}" rendered="#{loginController.loggedIn == true}" styleClass="container">
+    <p:dataTable id="dataTable" var="net" value="#{webapplication.netlist}" styleClass="container">
 
         <f:facet name="header">
             Nets to be retrieved
@@ -106,9 +106,13 @@
             <f:facet name="header">Status</f:facet>
             #{net.status}
         </p:column>
-        <p:column>
-            <f:facet name="header">Responsible User</f:facet>
+        <p:column rendered="#{loginController.loggedIn == true}">
+            <f:facet name="header">Person Responsible</f:facet>
             #{net.responsibleOperator.operatorName}
+        </p:column>
+        <p:column rendered="#{loginController.loggedIn == true}">
+            <f:facet name="header">Phonenumber</f:facet>
+            #{net.responsibleOperator.phonenumber}
         </p:column>
 
 
