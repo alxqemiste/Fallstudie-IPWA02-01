@@ -4,9 +4,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.Transient;
 
-@Entity
+@Entity  
 public class Ghostnet implements Serializable {
     
     @Id
@@ -83,9 +82,5 @@ public class Ghostnet implements Serializable {
     public void setResponsibleOperator(Operator responsibleOperator) {
         this.responsibleOperator = responsibleOperator;
     }
-    
-  
-    
-    
-    
+   
 }
