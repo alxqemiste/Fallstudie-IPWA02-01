@@ -6,3 +6,4 @@
 /src/main/resources/DB/derby.properties
 
 /src/main/resources/DB/
+/target/
